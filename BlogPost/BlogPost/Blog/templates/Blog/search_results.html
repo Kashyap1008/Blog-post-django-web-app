@@ -1,15 +1,8 @@
 {% extends "Blog/base.html" %}
 
-{% block search_bar %}
-    <form class="d-flex" method = "GET" action="{% url 'search-results' %}">
-        <input class="form-control mr-sm-2" type="search" name="q" placeholder="search Posts..." aria-label="search">
-        <button class="btn btn-outline-info my-2 my-sm-0" type="submit" ><i class="bi bi-search"></i></button>
-    </form>
-
-{% endblock search_bar %}
-
 
 {% block content %}
+    <h1 class="mb-3">Search results For "{{ request.GET.q }}"</h1>
     {% for post in posts %}
         <article class="media content-section">
             <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt="">
@@ -22,25 +15,26 @@
                 <p class="article-content">{{ post.content }}</p>
             </div>
         </article>
-
+        {% empty %}
+        <p>No results Found!</p>
     {% endfor %}
     {% if is_paginated %}
         {% if page_obj.has_previous %}
-            <a class="btn btn-outline-info mb-4"  href="?page=1">first</a>
-            <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            <a class="btn btn-outline-info mb-4"  href="?page=1&q={{ request.GET.q }}">first</a>
+            <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}">Previous</a>
         {% endif %}
 
         {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
-                <a class="btn btn-info mb-4"   href="?page={{ num }}">{{ num }}</a>
+                <a class="btn btn-info mb-4"   href="?page={{ num }}&q={{ request.GET.q }}">{{ num }}</a>
             {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a class="btn btn-outline-info mb-4"   href="?page={{ num }}">{{ num }}</a>
+                <a class="btn btn-outline-info mb-4"   href="?page={{ num }}&q={{ request.GET.q }}">{{ num }}</a>
             {% endif %} 
         {% endfor %}
 
         {% if page_obj.has_next %}
-            <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.next_page_number }}">Next</a>
-            <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}">Next</a>
+            <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.paginator.num_pages }}&q={{ request.GET.q }}">Last</a>
         {% endif %}
     {% endif %}
 {% endblock content %}

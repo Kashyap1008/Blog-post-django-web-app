@@ -6,6 +6,11 @@ from django.contrib.auth.models import User
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 
 
+from django.contrib.postgres.search import SearchQuery,SearchRank,SearchVector,TrigramSimilarity
+from django.db.models import Q
+
+
+
 def home(request):
     context = { 
         'posts' : Post.objects.all()
@@ -78,4 +83,22 @@ def about(request):
     return render(request,'Blog/about.html',{'title':'About'})
 
 
- 
+
+
+class SearchPostListView(ListView):
+    model = Post
+    template_name = 'Blog/search_results.html' #<app>/<model>_<viewtype>.html 
+    context_object_name = 'posts'
+
+    paginate_by = 5 
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            vector= SearchVector('title','content')
+            search_query = SearchQuery(query)
+            return Post.objects.annotate( rank = SearchRank(vector,search_query) ,
+                                          similarity = TrigramSimilarity('title',query) + TrigramSimilarity('content',query)
+                                         ).filter(Q(rank__gt=0.0) | Q(similarity__gt=0.1
+                                                                      )).order_by('-rank','-similarity')
+        return Post.objects.none()

@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+
+{% block branding %}
+
+   <img src="{% static 'images/logo.png' %}" height="30" alt="">
+
+    <h1>Blog Admin</h1>
+
+
+{% endblock %}
+{% block extrastyle %}
+
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+
+{% endblock %}
+
+{% block extrahead %}
+
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+{% endblock %}

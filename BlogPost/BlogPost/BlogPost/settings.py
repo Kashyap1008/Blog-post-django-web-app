@@ -34,10 +34,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.postgres',
     'users.apps.UsersConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'Blog.apps.BlogConfig',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -62,7 +64,7 @@ ROOT_URLCONF = 'BlogPost.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -160,3 +162,12 @@ load_dotenv(dotenv_path)
 EMAIL_USER = os.environ.get('EMAIL_USER')
 EMAIL_PASS = os.environ.get('EMAIL_PASS')
 
+JAZZMIN_SETTINGS = {
+    "site_title" : "Blog Admin",
+    "site_header" : "Blog",
+    "site_brand" : "Administration",
+    "welcome_sign" : "Welcome to Blog Admin",
+    "copyright" : "BlogPost LTD",
+    "show_ui_builder" : True,
+    
+}
