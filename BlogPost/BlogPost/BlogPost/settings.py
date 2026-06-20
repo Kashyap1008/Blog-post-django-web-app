@@ -57,6 +57,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'Blog.middlewares.RequestLoggingMiddleware',
+    'Blog.middlewares.VisitorIPMiddleware'
+    
 ]
 
 ROOT_URLCONF = 'BlogPost.urls'
@@ -170,4 +173,31 @@ JAZZMIN_SETTINGS = {
     "copyright" : "BlogPost LTD",
     "show_ui_builder" : True,
     
+}
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "requests.log",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        # This routes your custom middleware logs strictly to the file
+        "": {
+            "handlers": ["file"], 
+            "level": "INFO",
+        },
+        # This keeps Django's default terminal output "normal"
+        "django.server": {
+            "handlers": ["console"], 
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
 }

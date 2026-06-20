@@ -25,7 +25,14 @@ class Post(models.Model):
         return len(self.title)
 
 
+class PostViewLog(models.Model):
+    post  = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='views')
+    ip_address = models.GenericIPAddressField()
+    viewed_at = models.DateTimeField(auto_now_add=True)
 
+
+    class Meta:
+        unique_together = ('post','ip_address')
 
 
 

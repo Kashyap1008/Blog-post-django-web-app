@@ -1,10 +1,10 @@
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.http import HttpResponse
-from .models import Post
+from .models import Post,PostViewLog
 from django.contrib.auth.models import User
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
-
+from django.db import IntegrityError
 
 from django.contrib.postgres.search import SearchQuery,SearchRank,SearchVector,TrigramSimilarity
 from django.db.models import Q
@@ -12,6 +12,7 @@ from django.db.models import Q
 
 
 def home(request):
+    print("home")
     context = { 
         'posts' : Post.objects.all()
 
@@ -39,6 +40,24 @@ class UserPostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+    context_object_name = 'post'
+    def get(self,request,*args,**kwargs):
+        response = super().get(request,*args,**kwargs)
+        user_ip = getattr(request,'ip_address',None)
+        
+        if user_ip :
+            try:
+                PostViewLog.objects.create(post=self.object,ip_address = user_ip)
+            except IntegrityError:
+                pass
+            
+        return response
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_views'] = self.object.views.count()
+
+        return context
     
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post

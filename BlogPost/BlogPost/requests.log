@@ -1,0 +1,41 @@
+Watching for file changes with StatReloader
+Kashyap | GET | /
+"GET / HTTP/1.1" 200 8810
+Kashyap | GET | /
+"GET / HTTP/1.1" 200 8810
+Kashyap | GET | /about/
+"GET /about/ HTTP/1.1" 200 3884
+Kashyap | GET | /post/new/
+"GET /post/new/ HTTP/1.1" 200 4968
+Kashyap | GET | /profile/
+"GET /profile/ HTTP/1.1" 200 6032
+Kashyap | GET | /
+"GET / HTTP/1.1" 200 8810
+D:\code\projects\django_project1\BlogPost\BlogPost\BlogPost\settings.py changed, reloading.
+Watching for file changes with StatReloader
+D:\code\projects\django_project1\BlogPost\BlogPost\BlogPost\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Kashyap | GET | /
+Kashyap | GET | /
+Kashyap | GET | /about/
+Kashyap | GET | /post/new/
+Kashyap | GET | /profile/
+Kashyap | GET | /
+Kashyap | GET | /search/
+D:\code\projects\django_project1\BlogPost\BlogPost\Blog\middlewares.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Kashyap | GET | /
+Kashyap | GET | /favicon.ico
+Not Found: /favicon.ico
+Kashyap | GET | /post/146
+Kashyap | GET | /user/Kashyap
+Kashyap | GET | /post/146
+Watching for file changes with StatReloader
+Kashyap | GET | /
+Kashyap | GET | /post/146
+Kashyap | GET | /post/146
+Kashyap | GET | /post/146
+Kashyap | GET | /post/146
+Kashyap | GET | /post/145
+Kashyap | GET | /post/145
